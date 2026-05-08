@@ -282,7 +282,7 @@ impl VersionScheme {
         match self {
             VersionScheme::SemVer => semver::compare_version(a, b),
 
-            VersionScheme::Deb => deb::compare_version(a, b),
+            VersionScheme::Deb => Ok(deb::compare_version(a, b)),
 
             _ => panic!("TODO"),
         }
