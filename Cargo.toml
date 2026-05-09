@@ -1,0 +1,23 @@
+[workspace]
+resolver = "2"
+members = ["apk-version","compare", "debian-version", "semantic-version"]
+default-members = ["compare"]
+
+[profile.dev]
+opt-level = 0
+debug = 2
+lto = false
+strip = false
+panic = "unwind"
+incremental = true
+overflow-checks = true
+
+[profile.release]
+opt-level = 3           # "z"
+lto = "fat"
+codegen-units = 8
+debug = false
+strip = "symbols"
+panic = "abort"
+incremental = false
+overflow-checks = false
