@@ -3,7 +3,7 @@ use std::cmp::Ordering;
 use apk_version::compare_apk_versions;
 
 #[test]
-fn test_version_compare() {
+fn test_apk_version_compare() {
     for (a, x, b) in TEST_CASES {
         match compare_apk_versions(a, b) {
             Some(actual) => {
