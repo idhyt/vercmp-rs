@@ -1,9 +1,9 @@
 #ifndef APK_VERSION_H
 #define APK_VERSION_H
 
-#define APK_VERSION_EQUAL    0
-#define APK_VERSION_LESS     1
-#define APK_VERSION_GREATER  2
+#define APK_VERSION_EQUAL 0
+#define APK_VERSION_LESS 1
+#define APK_VERSION_GREATER 2
 
 /**
  * 比较两个 APK 版本字符串
