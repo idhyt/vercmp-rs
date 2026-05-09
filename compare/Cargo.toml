@@ -4,5 +4,6 @@ version = "0.1.0"
 edition = "2024"
 
 [dependencies]
-regex = "1.12.3"
-semver = "1.0.28"
+apk-version = { path = "../apk-version" }
+debian-version = { path = "../debian-version" }
+semantic-version = { path = "../semantic-version" }
