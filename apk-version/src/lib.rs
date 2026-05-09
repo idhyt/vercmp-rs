@@ -20,6 +20,14 @@ pub fn compare_apk_versions(a: &str, b: &str) -> Option<Ordering> {
     }
 }
 
+pub fn compare_version(a: &str, b: &str) -> Result<Ordering, String> {
+    if let Some(ordering) = compare_apk_versions(a, b) {
+        Ok(ordering)
+    } else {
+        Err("apk version compare unreachable!".to_string())
+    }
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;
