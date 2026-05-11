@@ -1,6 +1,6 @@
 [workspace]
 resolver = "2"
-members = ["apk-version","compare", "debian-version", "rpm-version", "semantic-version"]
+members = ["alpm-version","apk-version","compare", "debian-version", "rpm-version", "semantic-version"]
 default-members = ["compare"]
 
 [profile.dev]

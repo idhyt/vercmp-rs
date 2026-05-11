@@ -12,6 +12,14 @@ dependencies = [
 ]
 
 [[package]]
+name = "alpm-version"
+version = "0.1.0"
+dependencies = [
+ "bindgen",
+ "cc",
+]
+
+[[package]]
 name = "apk-version"
 version = "0.1.0"
 dependencies = [
@@ -85,8 +93,10 @@ dependencies = [
 name = "compare"
 version = "0.1.0"
 dependencies = [
+ "alpm-version",
  "apk-version",
  "debian-version",
+ "rpm-version",
  "semantic-version",
 ]
 
