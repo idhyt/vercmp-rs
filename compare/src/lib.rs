@@ -211,8 +211,11 @@ impl PurlType {
             // 使用 RPM 版本比较规则的
             PurlType::Rpm => VersionScheme::Rpm,
 
-            // 使用 APK/ALPM 规则的（Alpine Linux）
-            PurlType::Apk | PurlType::Alpm => VersionScheme::Apk,
+            // 使用 APK 版本比较规则的
+            PurlType::Apk => VersionScheme::Apk,
+
+            // 使用 ALPM 版本比较规则的（Alpine Linux）
+            PurlType::Alpm => VersionScheme::Alpm,
 
             // 使用 Debian 规则的
             PurlType::Deb => VersionScheme::Deb,
@@ -238,7 +241,7 @@ impl PurlType {
             | PurlType::Opam
             | PurlType::Pub
             | PurlType::Swift
-            | PurlType::Bazel => VersionScheme::SemVer,
+            | PurlType::Bazel => VersionScheme::Semantic,
 
             // 使用 Docker/OCI 版本规则（通常是标签，类似 SemVer 但更宽松）
             PurlType::Docker | PurlType::Oci => VersionScheme::Docker,
@@ -251,18 +254,20 @@ impl PurlType {
 /// 版本比较方案类型
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
 pub enum VersionScheme {
-    /// RPM 版本比较
-    Rpm,
     /// APK 版本比较
     Apk,
+    /// ALPM 版本比较
+    Alpm,
     /// Debian 版本比较
     Deb,
-    /// SemVer 规范
-    SemVer,
     /// Docker 标签版本（宽松 SemVer）
     Docker,
     /// 非标/通用比较
     Generic,
+    /// RPM 版本比较
+    Rpm,
+    /// SemVer 规范
+    Semantic,
 }
 
 impl VersionScheme {
@@ -277,11 +282,15 @@ impl VersionScheme {
     /// * `Err(String)` - 错误信息
     pub fn compare(&self, a: &str, b: &str) -> Result<std::cmp::Ordering, String> {
         match self {
-            VersionScheme::SemVer => semantic_version::compare_version(a, b),
+            VersionScheme::Semantic => semantic_version::compare_version(a, b),
 
             VersionScheme::Deb => Ok(debian_version::compare_version(a, b)),
 
             VersionScheme::Apk => apk_version::compare_version(a, b),
+
+            VersionScheme::Rpm => rpm_version::compare_version(a, b),
+
+            VersionScheme::Alpm => alpm_version::compare_version(a, b),
 
             _ => panic!("TODO"),
         }

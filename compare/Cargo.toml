@@ -7,3 +7,5 @@ edition = "2024"
 apk-version = { path = "../apk-version" }
 debian-version = { path = "../debian-version" }
 semantic-version = { path = "../semantic-version" }
+rpm-version = { path = "../rpm-version" }
+alpm-version = { path = "../alpm-version" }
