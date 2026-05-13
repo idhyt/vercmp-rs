@@ -9,6 +9,7 @@ debian-version = { path = "../debian-version" }
 semantic-version = { path = "../semantic-version" }
 rpm-version = { path = "../rpm-version" }
 alpm-version = { path = "../alpm-version" }
+version-compare = "0.2.1"
 
 [build-dependencies]
 ws-build = { path = "../ws-build" }

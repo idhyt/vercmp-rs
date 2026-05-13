@@ -298,7 +298,22 @@ impl VersionScheme {
 
             VersionScheme::Alpm => alpm_version::compare_version(a, b),
 
-            _ => panic!("TODO"),
+            // Fallback matching use the `version_compare` crate
+            VersionScheme::Docker | VersionScheme::Generic => {
+                use version_compare::{Cmp, Version};
+                let v1 = Version::from(a)
+                    .ok_or_else(|| format!("Fallback compare invalid version string: {}", a))?;
+                let v2 = Version::from(b)
+                    .ok_or_else(|| format!("Fallback compare invalid version string: {}", b))?;
+                let ord = match v1.compare(v2) {
+                    Cmp::Lt => std::cmp::Ordering::Less,
+                    Cmp::Eq => std::cmp::Ordering::Equal,
+                    Cmp::Gt => std::cmp::Ordering::Greater,
+                    // _ => unreachable!(),
+                    _ => return Err(format!("Unreachable compare {} vs {}", a, b)),
+                };
+                Ok(ord)
+            }
         }
     }
 }
