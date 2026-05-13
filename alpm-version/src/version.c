@@ -18,7 +18,7 @@
 #include <string.h>
 #include <ctype.h>
 #include <stdlib.h>
-
+#include "version.h"
 /* libalpm */
 // #include "util.h"
 
