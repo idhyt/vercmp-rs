@@ -1,6 +1,7 @@
 /// PURL Type Enum（Based on Package URL）
 ///
 /// reference: https://github.com/package-url/purl-spec/tree/main/types
+#[derive(Debug)]
 pub enum PurlType {
     /// description: Alpine Linux APK-based packages
     /// examples: ['pkg:apk/alpine/curl@7.83.0-r0?arch=x86', 'pkg:apk/alpine/apk@2.12.9-r3?arch=x86']
@@ -271,6 +272,11 @@ pub enum VersionScheme {
 }
 
 impl VersionScheme {
+    pub fn from_purl(purl: &str) -> Result<Self, String> {
+        let t = get_purl_type_fast(purl, false)?;
+        Ok(PurlType::from_str(t).version_scheme())
+    }
+
     /// 比较两个版本字符串
     ///
     /// # Arguments
@@ -294,5 +300,108 @@ impl VersionScheme {
 
             _ => panic!("TODO"),
         }
+    }
+}
+
+fn get_purl_type_fast(purl: &str, strict: bool) -> Result<&str, String> {
+    let bytes = purl.as_bytes();
+    // 检查 "pkg:" 前缀
+    if bytes.len() < 5 || &bytes[0..4] != b"pkg:" {
+        return Err("PURL missing required `scheme` component".to_string());
+    }
+
+    let mut i = 4; // 跳过 "pkg:"
+    let len = bytes.len();
+    // 查找第一个 '/' 的位置
+    while i < len && bytes[i] != b'/' {
+        if strict {
+            let c = bytes[i];
+            // type 只能包含：a-z, 0-9, -, _, .
+            let is_valid = matches!(c, b'a'..=b'z' | b'0'..=b'9' | b'-' | b'_' | b'.');
+            if !is_valid {
+                return Err("PURL type contains invalid character".to_string());
+            }
+        }
+        i += 1;
+    }
+    // 检查有效性：
+    // 1. i == 4: 没有 type（如 "pkg:/..."）
+    // 2. i == len: 没有找到 '/'（如 "pkg:cargo"）
+    // 3. i + 1 >= len: '/' 后面没有 name（如 "pkg:cargo/"）
+    if i == 4 || i == len || i + 1 >= len {
+        return Err("PURL missing required `type` component".to_string());
+    }
+
+    let t = unsafe { std::str::from_utf8_unchecked(&bytes[4..i]) };
+    Ok(t)
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn test_valid_purls() {
+        let valid_cases = [
+            ("pkg:deb/debian/curl@7.50.3-1", "deb"),
+            ("pkg:docker/cassandra@sha256:244fd47e", "docker"),
+            ("pkg:gem/jruby-launcher@1.1.2", "gem"),
+            ("pkg:cargo/serde@1.0.0", "cargo"),
+            ("pkg:maven/org.foo/bar", "maven"),
+            ("pkg:generic/foo#subpath", "generic"),
+            ("pkg:python/django@3.2", "python"),
+            ("pkg:npm/foo@1.0.0", "npm"),
+        ];
+
+        for (purl, expected) in valid_cases {
+            let t = get_purl_type_fast(purl, false);
+            assert!(t.is_ok());
+            assert_eq!(t.unwrap(), expected);
+        }
+    }
+
+    #[test]
+    fn test_invalid_purls() {
+        let invalid_cases = [
+            "pkg:cargo/",       // 缺少 name
+            "pkg:cargo",        // 没有斜杠
+            "pkg:/serde@1.0.0", // type 为空
+            "pkg:",             // 什么都没有
+            "pkg:deb/",         // 缺少 name
+            "invalid",          // 不是 purl
+            "pkg:",             // 不完整
+            "",                 // 空字符串
+        ];
+
+        for purl in invalid_cases {
+            let t = get_purl_type_fast(purl, false);
+            assert!(t.is_err());
+        }
+    }
+
+    #[test]
+    fn test_strict_validation() {
+        // 严格模式会拒绝非法字符
+        assert!(
+            get_purl_type_fast("pkg:Deb/debian/curl", true).is_err() // 大写 D
+        );
+        assert!(
+            get_purl_type_fast("pkg:d👀b/debian/curl", true).is_err() // 包含非法字符
+        );
+        assert_eq!(
+            get_purl_type_fast("pkg:deb/debian/curl", true).unwrap(), // 全小写
+            "deb"
+        );
+    }
+
+    #[test]
+    fn test_edge_cases() {
+        // 边界情况
+        assert!(get_purl_type_fast("pkg:a/", false).is_err()); // name 为空
+        assert_eq!(get_purl_type_fast("pkg:a/b", false).unwrap(), "a"); // 最小有效格式
+        assert_eq!(
+            get_purl_type_fast("pkg:abc123/def", false).unwrap(),
+            "abc123"
+        );
     }
 }
