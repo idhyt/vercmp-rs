@@ -1,24 +1,14 @@
-use std::env;
-use std::path::PathBuf;
+use ws_build;
 
 fn main() {
-    println!("cargo:rerun-if-changed=rpm-version");
-    cc::Build::new()
-        .file("src/rpmvercmp.c")
-        .compile("rpm_version");
-
-    let bindings = bindgen::Builder::default()
-        .header("src/version.h")
-        .clang_arg("-Isrc/")
-        .allowlist_function("rpm_version_compare")
-        .allowlist_var("RPM_VERSION_EQUAL")
-        .allowlist_var("RPM_VERSION_LESS")
-        .allowlist_var("RPM_VERSION_GREATER")
-        .generate()
-        .expect("Unable to generate bindings");
-
-    let out_path = PathBuf::from(env::var("OUT_DIR").unwrap());
-    bindings
-        .write_to_file(out_path.join("bindings.rs"))
-        .expect("Couldn't write bindings!");
+    ws_build::setup_c_build(&["src/rpmvercmp.c"]);
+    ws_build::handle_bindings(
+        "src/version.h",
+        &[
+            "rpm_version_compare",
+            "RPM_VERSION_EQUAL",
+            "RPM_VERSION_LESS",
+            "RPM_VERSION_GREATER",
+        ],
+    );
 }

@@ -7,5 +7,10 @@ edition = "2024"
 
 
 [build-dependencies]
-bindgen = "0.72.1"
-cc = "1.2.62"
+# bindgen = "0.72.1"
+# cc = "1.2.62"
+ws-build = { path = "../ws-build" }
+
+[features]
+default = []
+generate-bindings = ["ws-build/generate-bindings"]

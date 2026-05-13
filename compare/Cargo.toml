@@ -9,3 +9,10 @@ debian-version = { path = "../debian-version" }
 semantic-version = { path = "../semantic-version" }
 rpm-version = { path = "../rpm-version" }
 alpm-version = { path = "../alpm-version" }
+
+[build-dependencies]
+ws-build = { path = "../ws-build" }
+
+[features]
+default = []
+generate-bindings = ["ws-build/generate-bindings"]

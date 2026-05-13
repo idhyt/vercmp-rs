@@ -2,7 +2,7 @@
 #include <ctype.h>
 #include <stdbool.h>
 #include <stddef.h>
-#include <stdint.h>
+// #include <stdint.h>
 #include <string.h>
 
 typedef struct {
@@ -295,7 +295,7 @@ static int apk_version_compare_core(apk_blob_t a, apk_blob_t b) {
   return APK_VERSION_EQUAL;
 }
 
-int apk_version_compare(const char *str1, const char *str2) {
+int32_t apk_version_compare(const char *str1, const char *str2) {
   apk_blob_t a = apk_blob_from_cstr(str1);
   apk_blob_t b = apk_blob_from_cstr(str2);
   return apk_version_compare_core(a, b);

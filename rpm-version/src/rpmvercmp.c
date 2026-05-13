@@ -156,6 +156,6 @@ int rpmvercmp(const char *a, const char *b) {
     return 1;
 }
 
-int rpm_version_compare(const char *a, const char *b) {
+int32_t rpm_version_compare(const char *a, const char *b) {
   return rpmvercmp(a, b) + 1;
 }

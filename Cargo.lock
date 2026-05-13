@@ -15,16 +15,14 @@ dependencies = [
 name = "alpm-version"
 version = "0.1.0"
 dependencies = [
- "bindgen",
- "cc",
+ "ws-build",
 ]
 
 [[package]]
 name = "apk-version"
 version = "0.1.0"
 dependencies = [
- "bindgen",
- "cc",
+ "ws-build",
 ]
 
 [[package]]
@@ -98,6 +96,7 @@ dependencies = [
  "debian-version",
  "rpm-version",
  "semantic-version",
+ "ws-build",
 ]
 
 [[package]]
@@ -236,8 +235,7 @@ checksum = "dc897dd8d9e8bd1ed8cdad82b5966c3e0ecae09fb1907d58efaa013543185d0a"
 name = "rpm-version"
 version = "0.1.0"
 dependencies = [
- "bindgen",
- "cc",
+ "ws-build",
 ]
 
 [[package]]
@@ -288,3 +286,11 @@ name = "windows-link"
 version = "0.2.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "f0805222e57f7521d6a62e36fa9163bc891acd422f971defe97d64e70d0a4fe5"
+
+[[package]]
+name = "ws-build"
+version = "0.1.0"
+dependencies = [
+ "bindgen",
+ "cc",
+]

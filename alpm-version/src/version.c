@@ -263,6 +263,6 @@ int SYMEXPORT alpm_pkg_vercmp(const char *a, const char *b)
 	return ret;
 }
 
-int alpm_version_compare(const char *a, const char *b) {
+int32_t alpm_version_compare(const char *a, const char *b) {
   return alpm_pkg_vercmp(a, b) + 1;
 }
