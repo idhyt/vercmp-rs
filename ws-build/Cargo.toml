@@ -1,0 +1,15 @@
+[package]
+name = "ws-build"
+version = "0.1.0"
+edition = "2024"
+
+[lib]
+path = "src/lib.rs"
+
+[dependencies]
+bindgen = {version = "0.72.1", optional = true}
+cc = "1.2.62"
+
+[features]
+# default = ["generate-bindings"]
+generate-bindings = ["bindgen"]
