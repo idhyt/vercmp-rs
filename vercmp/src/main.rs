@@ -1,4 +1,4 @@
-use compare::{PurlType, VersionScheme};
+use vercmp_rs::{PurlType, VersionScheme};
 
 fn main() {
     let args: Vec<String> = std::env::args().collect();

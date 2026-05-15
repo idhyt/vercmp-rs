@@ -1,7 +1,15 @@
 [workspace]
 resolver = "2"
-members = ["alpm-version","apk-version","compare", "debian-version", "rpm-version", "semantic-version", "ws-build"]
-default-members = ["compare"]
+members = [
+    "alpm-version",
+    "apk-version",
+    "debian-version",
+    "rpm-version",
+    "semantic-version",
+    "vercmp",
+    "ws-build",
+]
+default-members = ["vercmp"]
 
 [profile.dev]
 opt-level = 0

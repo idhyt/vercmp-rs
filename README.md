@@ -31,28 +31,28 @@ fn main() {
 }
 ```
 
-or usage with compare cli:
+or usage with vercmp-rs cli:
 
 ```bash
-> cargo build -p compare --release
+> cargo build -p vercmp-rs --release
 
-> ./target/release/compare pkg:golang/google.golang.org/genproto 0.1.1.alpha 0.1.1
+> ./target/release/vercmp-rs pkg:golang/google.golang.org/genproto 0.1.1.alpha 0.1.1
 scheme:   Semantic
 compare:  0.1.1.alpha Less 0.1.1
 
-> ./target/release/compare pkg:rpm/xx 3.99.5final.SP07 3.99.5final.SP10
+> ./target/release/vercmp-rs pkg:rpm/xx 3.99.5final.SP07 3.99.5final.SP10
 scheme:   Rpm
 compare:  3.99.5final.SP07 Less 3.99.5final.SP10
 
-> ./target/debug/compare apk 3.10.18-r1 3.10.10b-r1
+> ./target/debug/vercmp-rs apk 3.10.18-r1 3.10.10b-r1
 scheme:   Apk
 compare:  3.10.18-r1 Greater 3.10.10b-r1
 
-> ./target/debug/compare deb 1:1.0 0:2.0
+> ./target/debug/vercmp-rs deb 1:1.0 0:2.0
 scheme:   Deb
 compare:  1:1.0 Greater 0:2.0
 
-> ./target/debug/compare alpm 1.0beta 1.0rc
+> ./target/debug/vercmp-rs alpm 1.0beta 1.0rc
 scheme:   Alpm
 compare:  1.0beta Less 1.0rc
 ```
@@ -75,15 +75,6 @@ cross build --release --target aarch64-apple-darwin
 cross build --release --target x86_64-pc-windows-gnu
 ```
 
-use the cli to compare versions
-
-```bash
-> ./target/release/compare --help
-> ./target/release/compare pkg:golang/google.golang.org/genproto 0.1.1.alpha 0.1.1
-scheme:   Semantic
-compare:  0.1.1.alpha Less 0.1.1
-```
-
 cross build all targets
 
 ```bash
@@ -93,5 +84,5 @@ cargo clean && cargo build --features generate-bindings && (x() { rm -rf ./targe
 show the binary info
 
 ```bash
-find target/*/release/ -type f \( -name "compare" -o -name "compare.exe" \) -exec sh -c 'echo "=== {} ===" && echo "Size: $(ls -lh "{}" | awk "{print \$5}")" && echo "Type: $(file -b "{}")" && echo "Dependencies:" && ldd "{}" 2>&1; echo' \;
+find target/*/release/ -type f \( -name "vercmp-rs" -o -name "vercmp-rs.exe" \) -exec sh -c 'echo "=== {} ===" && echo "Size: $(ls -lh "{}" | awk "{print \$5}")" && echo "Type: $(file -b "{}")" && echo "Dependencies:" && ldd "{}" 2>&1; echo' \;
 ```
