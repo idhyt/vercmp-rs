@@ -211,17 +211,13 @@ impl PurlType {
         match self {
             // 使用 RPM 版本比较规则的
             PurlType::Rpm => VersionScheme::Rpm,
-
             // 使用 APK 版本比较规则的
             PurlType::Apk => VersionScheme::Apk,
-
             // 使用 ALPM 版本比较规则的（Alpine Linux）
             PurlType::Alpm => VersionScheme::Alpm,
-
             // 使用 Debian 规则的
             PurlType::Deb => VersionScheme::Deb,
-
-            // 使用 SemVer 规范的
+            // 类 SemVer 方案（严格遵循或近似 SemVer）
             PurlType::Cargo
             | PurlType::Npm
             | PurlType::Pypi
@@ -229,25 +225,48 @@ impl PurlType {
             | PurlType::Golang
             | PurlType::Hex
             | PurlType::Nuget
-            | PurlType::Maven
-            | PurlType::Conda
-            | PurlType::Cran
-            | PurlType::Cpan
             | PurlType::Composer
             | PurlType::Cocoapods
-            | PurlType::Conan
-            | PurlType::Hackage
             | PurlType::Julia
-            | PurlType::Luarocks
-            | PurlType::Opam
             | PurlType::Pub
             | PurlType::Swift
             | PurlType::Bazel => VersionScheme::Semantic,
 
-            // 使用 Docker/OCI 版本规则（通常是标签，类似 SemVer 但更宽松）
+            // TODO: 近似 SemVer 方案，需要逐步实现并替换
+            // TODO: Maven(Java) - 基于 Maven 仓库的版本管理，类 SemVer
+            PurlType::Maven
+            // TODO: Conan(C++) - 基于 Conan 包管理器的版本管理，基于 SemVer 的扩展实现
+            | PurlType::Conan
+            // TODO: Conda(Python) - 基于 Conda 包管理器的版本管理，SemVer 的一个超集或扩展
+            | PurlType::Conda
+            // TODO: Hackage(Haskell) - 基于 Hackage 包管理器的版本管理，与 SemVer 相似但有区别
+            | PurlType::Hackage
+            // TODO: Luarocks(Lua) - 基于 Luarocks 包管理器的版本管理，比 SemVer 更宽松
+            | PurlType::Luarocks
+            // TODO: Opam(OCaml) - 基于 Opam 包管理器的版本管理，与 SemVer 兼容，但使用了非标准的标识符
+            | PurlType::Opam
+            // TODO: Bitnami - 拥有专用 go-version 库的独特方案
+            | PurlType::Bitnami => VersionScheme::Semantic,
+            // TODO: Cran(R 语言) - 基于 CRAN 包管理器的版本管理，与 SemVer 不兼容
+            PurlType::Cran => VersionScheme::Generic,
+            // TODO: Cpan(Perl) - 基于 CPAN 包管理器的版本管理，与 SemVer 截然不同
+            PurlType::Cpan => VersionScheme::Generic,
+            // TODO: 通用或无明显结构化版本的方案
+            PurlType::ChromeExtension
+            | PurlType::Bitbucket
+            | PurlType::Github
+            | PurlType::Generic
+            | PurlType::Huggingface
+            | PurlType::Mlflow
+            | PurlType::Qpkg
+            | PurlType::Swid
+            | PurlType::VscodeExtension
+            | PurlType::Yocto
+            | PurlType::Otp => VersionScheme::Generic,
+            // TODO: 使用 Docker/OCI 版本规则（通常是标签，类似 SemVer 但更宽松）
             PurlType::Docker | PurlType::Oci => VersionScheme::Docker,
             // 使用通用/兜底规则
-            _ => VersionScheme::Generic,
+            // _ => VersionScheme::Generic,
         }
     }
 }
@@ -289,15 +308,10 @@ impl VersionScheme {
     pub fn compare(&self, a: &str, b: &str) -> Result<std::cmp::Ordering, String> {
         match self {
             VersionScheme::Semantic => semantic_version::compare_version(a, b),
-
             VersionScheme::Deb => Ok(debian_version::compare_version(a, b)),
-
             VersionScheme::Apk => apk_version::compare_version(a, b),
-
             VersionScheme::Rpm => rpm_version::compare_version(a, b),
-
             VersionScheme::Alpm => alpm_version::compare_version(a, b),
-
             // Fallback matching use the `version_compare` crate
             VersionScheme::Docker | VersionScheme::Generic => {
                 use version_compare::{Cmp, Version};
