@@ -44,15 +44,15 @@ compare:  0.1.1.alpha Less 0.1.1
 scheme:   Rpm
 compare:  3.99.5final.SP07 Less 3.99.5final.SP10
 
-> ./target/debug/vercmp-rs apk 3.10.18-r1 3.10.10b-r1
+> ./target/release/vercmp-rs apk 3.10.18-r1 3.10.10b-r1
 scheme:   Apk
 compare:  3.10.18-r1 Greater 3.10.10b-r1
 
-> ./target/debug/vercmp-rs deb 1:1.0 0:2.0
+> ./target/release/vercmp-rs deb 1:1.0 0:2.0
 scheme:   Deb
 compare:  1:1.0 Greater 0:2.0
 
-> ./target/debug/vercmp-rs alpm 1.0beta 1.0rc
+> ./target/release/vercmp-rs alpm 1.0beta 1.0rc
 scheme:   Alpm
 compare:  1.0beta Less 1.0rc
 ```
