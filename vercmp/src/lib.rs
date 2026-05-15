@@ -232,11 +232,12 @@ impl PurlType {
             | PurlType::Swift
             | PurlType::Bazel => VersionScheme::Semantic,
 
+            // TODO: Maven(Java) - 基于 Maven 仓库的版本管理，当前仅实现 Maven 3
+            PurlType::Maven => VersionScheme::Maven,
+
             // TODO: 近似 SemVer 方案，需要逐步实现并替换
-            // TODO: Maven(Java) - 基于 Maven 仓库的版本管理，类 SemVer
-            PurlType::Maven
             // TODO: Conan(C++) - 基于 Conan 包管理器的版本管理，基于 SemVer 的扩展实现
-            | PurlType::Conan
+            PurlType::Conan
             // TODO: Conda(Python) - 基于 Conda 包管理器的版本管理，SemVer 的一个超集或扩展
             | PurlType::Conda
             // TODO: Hackage(Haskell) - 基于 Hackage 包管理器的版本管理，与 SemVer 相似但有区别
@@ -284,6 +285,8 @@ pub enum VersionScheme {
     Docker,
     /// 非标/通用比较
     Generic,
+    /// Maven 版本比较
+    Maven,
     /// RPM 版本比较
     Rpm,
     /// SemVer 规范
@@ -312,6 +315,7 @@ impl VersionScheme {
             VersionScheme::Apk => apk_version::compare_version(a, b),
             VersionScheme::Rpm => rpm_version::compare_version(a, b),
             VersionScheme::Alpm => alpm_version::compare_version(a, b),
+            VersionScheme::Maven => maven_version::compare_version(a, b),
             // Fallback matching use the `version_compare` crate
             VersionScheme::Docker | VersionScheme::Generic => {
                 use version_compare::{Cmp, Version};

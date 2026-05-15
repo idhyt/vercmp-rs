@@ -55,6 +55,10 @@ compare:  1:1.0 Greater 0:2.0
 > ./target/release/vercmp-rs alpm 1.0beta 1.0rc
 scheme:   Alpm
 compare:  1.0beta Less 1.0rc
+
+> ./target/release/vercmp-rs maven 1m3 1-milestone-3
+scheme:   Maven
+compare:  1m3 Equal 1-milestone-3
 ```
 
 # building

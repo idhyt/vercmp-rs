@@ -684,6 +684,7 @@ dependencies = [
  "apk-version",
  "cbindgen",
  "debian-version",
+ "maven-version",
  "rpm-version",
  "semantic-version",
  "version-compare",
