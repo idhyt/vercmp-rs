@@ -1,0 +1,57 @@
+stages:
+    - build
+    - testing
+
+variables:
+    GIT_STRATEGY: clone
+    GIT_DEPTH: 1
+    RUSTUP_UPDATE_ROOT: "https://mirrors.aliyun.com/rustup/rustup"
+    RUSTUP_DIST_SERVER: "https://mirrors.aliyun.com/rustup"
+    RUSTUP_AUTO_SELF_UPDATE: "false"
+    RUSTUP_INIT_SKIP_PATH_CHECK: "yes"
+
+.build-base: &build-base
+    stage: build
+    tags:
+        - linux-amd64-shell
+    before_script:
+        - rustup --version
+        - unset CARGO_NET_OFFLINE
+    script:
+        - echo $BUILD_TARGET
+        - cargo clean && cargo build --features generate-bindings
+        - cross build --release --target $BUILD_TARGET
+    only:
+        - main
+    artifacts:
+        name: vercmp-rs
+        paths:
+            - target/$BUILD_TARGET/release/vercmp-rs
+        expire_in: 1 week
+
+build-linux-amd64:
+    <<: *build-base
+    variables:
+        BUILD_TARGET: "x86_64-unknown-linux-musl"
+
+build-linux-aarch64:
+    <<: *build-base
+    variables:
+        BUILD_TARGET: "aarch64-unknown-linux-musl"
+
+testing-linux-amd64:
+    stage: testing
+    tags:
+        - linux-amd64-shell
+    needs:
+        - build-linux-amd64
+    variables:
+        BUILD_TARGET: "x86_64-unknown-linux-musl"
+    script:
+        - target/$BUILD_TARGET/release/vercmp-rs pkg:golang/google.golang.org/genproto 0.1.1.alpha 0.1.1 | tee /dev/stderr | grep -q "Less"
+        - target/$BUILD_TARGET/release/vercmp-rs pkg:rpm/xx 3.99.5final.SP07 3.99.5final.SP10 | tee /dev/stderr | grep -q "Less"
+        - target/$BUILD_TARGET/release/vercmp-rs apk 3.10.18-r1 3.10.10b-r1 | tee /dev/stderr | grep -q "Greater"
+        - target/$BUILD_TARGET/release/vercmp-rs deb 1:1.0 0:2.0 | tee /dev/stderr | grep -q "Greater"
+        - target/$BUILD_TARGET/release/vercmp-rs alpm 1.0beta 1.0rc | tee /dev/stderr | grep -q "Less"
+        - target/$BUILD_TARGET/release/vercmp-rs cargo 1.1.alpha 1.1 | tee /dev/stderr | grep -q "Less"
+        - target/$BUILD_TARGET/release/vercmp-rs cargo 1.1.dirty 1.1 | tee /dev/stderr | grep -q "Equal"
