@@ -4,6 +4,7 @@ members = [
     "alpm-version",
     "apk-version",
     "debian-version",
+    "maven-version",
     "rpm-version",
     "semantic-version",
     "vercmp",
