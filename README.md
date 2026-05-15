@@ -86,3 +86,9 @@ show the binary info
 ```bash
 find target/*/release/ -type f \( -name "vercmp-rs" -o -name "vercmp-rs.exe" \) -exec sh -c 'echo "=== {} ===" && echo "Size: $(ls -lh "{}" | awk "{print \$5}")" && echo "Type: $(file -b "{}")" && echo "Dependencies:" && ldd "{}" 2>&1; echo' \;
 ```
+
+run testcase
+
+```bash
+cargo test --workspace -- --show-output
+```
