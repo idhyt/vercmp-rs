@@ -420,3 +420,6 @@ mod tests {
         );
     }
 }
+
+#[cfg(feature = "generate-capi")]
+mod capi;

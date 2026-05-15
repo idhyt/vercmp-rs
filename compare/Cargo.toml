@@ -13,7 +13,19 @@ version-compare = "0.2.1"
 
 [build-dependencies]
 ws-build = { path = "../ws-build" }
+cbindgen = { version = "0.29.2", optional = true }
+
+# [lib]
+# name = "vercmp"
+# crate-type = [
+#     "cdylib",
+#     # "rlib",
+#     # "staticlib"
+# ]
 
 [features]
 default = []
+# 生成 Rust 调用 C 的绑定
 generate-bindings = ["ws-build/generate-bindings"]
+# 生成 C 调用 Rust 的 FFI 接口
+generate-capi = ["cbindgen"]
