@@ -1,5 +1,9 @@
 use std::os::raw::c_char;
 
+const CMP_EQUAL: i32 = 0;
+const CMP_LESS: i32 = -1;
+const CMP_GREATER: i32 = 1;
+
 #[unsafe(no_mangle)]
 pub extern "C" fn compare_version_with_purl_type(
     p: *const c_char,
@@ -16,8 +20,8 @@ pub extern "C" fn compare_version_with_purl_type(
         return 100;
     }
 
-    let to_option_str = |s: *const c_char| -> &str {
-        match unsafe { CStr::from_ptr(p).to_str() } {
+    let to_option_str = |v: *const c_char| -> &str {
+        match unsafe { CStr::from_ptr(v).to_str() } {
             Ok(s) => s,
             Err(e) => {
                 eprintln!("Utf8Error: {}", e);
@@ -50,9 +54,9 @@ pub extern "C" fn compare_version_with_purl_type(
         Ok(ord) => {
             println!("compare:  {} {:?} {}", version_a, ord, version_b);
             match ord {
-                Ordering::Less => -1,
-                Ordering::Equal => 0,
-                Ordering::Greater => 1,
+                Ordering::Less => CMP_LESS,
+                Ordering::Equal => CMP_EQUAL,
+                Ordering::Greater => CMP_GREATER,
             }
         }
         Err(e) => {
