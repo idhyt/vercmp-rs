@@ -10,6 +10,8 @@ maven-version = { path = "../maven-version" }
 semantic-version = { path = "../semantic-version" }
 rpm-version = { path = "../rpm-version" }
 alpm-version = { path = "../alpm-version" }
+opam-version = { path = "../opam-version" }
+
 version-compare = "0.2.1"
 
 [build-dependencies]

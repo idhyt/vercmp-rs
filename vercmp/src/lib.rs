@@ -217,6 +217,11 @@ impl PurlType {
             PurlType::Alpm => VersionScheme::Alpm,
             // 使用 Debian 规则的
             PurlType::Deb => VersionScheme::Deb,
+            // Maven(Java) - 基于 Maven 仓库的版本管理，当前仅实现 Maven 3
+            PurlType::Maven => VersionScheme::Maven,
+            // Opam(OCaml) - 基于 Opam 包管理器的版本管理
+            PurlType::Opam => VersionScheme::Opam,
+
             // 类 SemVer 方案（严格遵循或近似 SemVer）
             PurlType::Cargo
             | PurlType::Npm
@@ -232,11 +237,10 @@ impl PurlType {
             | PurlType::Swift
             | PurlType::Bazel => VersionScheme::Semantic,
 
-            // TODO: Maven(Java) - 基于 Maven 仓库的版本管理，当前仅实现 Maven 3
-            PurlType::Maven => VersionScheme::Maven,
-
             // TODO: 近似 SemVer 方案，需要逐步实现并替换
             // TODO: Conan(C++) - 基于 Conan 包管理器的版本管理，基于 SemVer 的扩展实现
+            // https://github.com/conan-io/conan/blob/develop2/conan/internal/model/version.py
+            // https://github.com/conan-io/conan/tree/develop2/test/unittests/model/version
             PurlType::Conan
             // TODO: Conda(Python) - 基于 Conda 包管理器的版本管理，SemVer 的一个超集或扩展
             | PurlType::Conda
@@ -244,8 +248,6 @@ impl PurlType {
             | PurlType::Hackage
             // TODO: Luarocks(Lua) - 基于 Luarocks 包管理器的版本管理，比 SemVer 更宽松
             | PurlType::Luarocks
-            // TODO: Opam(OCaml) - 基于 Opam 包管理器的版本管理，与 SemVer 兼容，但使用了非标准的标识符
-            | PurlType::Opam
             // TODO: Bitnami - 拥有专用 go-version 库的独特方案
             | PurlType::Bitnami => VersionScheme::Semantic,
             // TODO: Cran(R 语言) - 基于 CRAN 包管理器的版本管理，与 SemVer 不兼容
@@ -287,6 +289,8 @@ pub enum VersionScheme {
     Generic,
     /// Maven 版本比较
     Maven,
+    /// Opam(OCaml) 版本比较
+    Opam,
     /// RPM 版本比较
     Rpm,
     /// SemVer 规范
@@ -316,6 +320,8 @@ impl VersionScheme {
             VersionScheme::Rpm => rpm_version::compare_version(a, b),
             VersionScheme::Alpm => alpm_version::compare_version(a, b),
             VersionScheme::Maven => maven_version::compare_version(a, b),
+            VersionScheme::Opam => Ok(opam_version::compare_version(a, b)),
+
             // Fallback matching use the `version_compare` crate
             VersionScheme::Docker | VersionScheme::Generic => {
                 use version_compare::{Cmp, Version};
