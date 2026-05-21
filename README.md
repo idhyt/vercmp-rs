@@ -59,6 +59,10 @@ compare:  1.0beta Less 1.0rc
 > ./target/release/vercmp-rs maven 1m3 1-milestone-3
 scheme:   Maven
 compare:  1m3 Equal 1-milestone-3
+
+> ./target/release/vercmp-rs opam 1.2.3 1.2.3~preview
+scheme:   Opam
+compare:  1.2.3 Greater 1.2.3~preview
 ```
 
 # building
@@ -94,5 +98,6 @@ find target/*/release/ -type f \( -name "vercmp-rs" -o -name "vercmp-rs.exe" \) 
 run testcase
 
 ```bash
+cargo test -p apk-version -- test_apk_version_compare --show-output
 cargo test --workspace -- --show-output
 ```
