@@ -63,6 +63,10 @@ compare:  1m3 Equal 1-milestone-3
 > ./target/release/vercmp-rs opam 1.2.3 1.2.3~preview
 scheme:   Opam
 compare:  1.2.3 Greater 1.2.3~preview
+
+> ./target/release/vercmp-rs luarocks "3.1.0-1" "3.1.0"
+scheme:   Luarocks
+compare:  3.1.0-1 Equal 3.1.0
 ```
 
 # building
