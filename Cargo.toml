@@ -3,7 +3,7 @@ resolver = "2"
 members = [
     "alpm-version",
     "apk-version",
-    "debian-version",
+    "debian-version", "luarocks-version",
     "maven-version",
     "opam-version",
     "rpm-version",
