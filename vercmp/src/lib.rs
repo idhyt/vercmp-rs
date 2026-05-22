@@ -221,6 +221,8 @@ impl PurlType {
             PurlType::Maven => VersionScheme::Maven,
             // Opam(OCaml) - 基于 Opam 包管理器的版本管理
             PurlType::Opam => VersionScheme::Opam,
+            // Luarocks(Lua) - 基于 Luarocks 包管理器的版本管理，比 SemVer 更宽松
+            PurlType::Luarocks => VersionScheme::Luarocks,
 
             // 类 SemVer 方案（严格遵循或近似 SemVer）
             PurlType::Cargo
@@ -246,8 +248,6 @@ impl PurlType {
             | PurlType::Conda
             // TODO: Hackage(Haskell) - 基于 Hackage 包管理器的版本管理，与 SemVer 相似但有区别
             | PurlType::Hackage
-            // TODO: Luarocks(Lua) - 基于 Luarocks 包管理器的版本管理，比 SemVer 更宽松
-            | PurlType::Luarocks
             // TODO: Bitnami - 拥有专用 go-version 库的独特方案
             | PurlType::Bitnami => VersionScheme::Semantic,
             // TODO: Cran(R 语言) - 基于 CRAN 包管理器的版本管理，与 SemVer 不兼容
@@ -287,6 +287,8 @@ pub enum VersionScheme {
     Docker,
     /// 非标/通用比较
     Generic,
+    /// LuaRocks(Lua) 版本比较
+    Luarocks,
     /// Maven 版本比较
     Maven,
     /// Opam(OCaml) 版本比较
@@ -321,6 +323,7 @@ impl VersionScheme {
             VersionScheme::Alpm => alpm_version::compare_version(a, b),
             VersionScheme::Maven => maven_version::compare_version(a, b),
             VersionScheme::Opam => Ok(opam_version::compare_version(a, b)),
+            VersionScheme::Luarocks => luarocks_version::compare_version(a, b),
 
             // Fallback matching use the `version_compare` crate
             VersionScheme::Docker | VersionScheme::Generic => {

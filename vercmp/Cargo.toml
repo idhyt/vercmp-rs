@@ -4,13 +4,14 @@ version = "0.1.0"
 edition = "2024"
 
 [dependencies]
+alpm-version = { path = "../alpm-version" }
 apk-version = { path = "../apk-version" }
 debian-version = { path = "../debian-version" }
+luarocks-version = { path = "../luarocks-version" }
 maven-version = { path = "../maven-version" }
-semantic-version = { path = "../semantic-version" }
-rpm-version = { path = "../rpm-version" }
-alpm-version = { path = "../alpm-version" }
 opam-version = { path = "../opam-version" }
+rpm-version = { path = "../rpm-version" }
+semantic-version = { path = "../semantic-version" }
 
 version-compare = "0.2.1"
 
