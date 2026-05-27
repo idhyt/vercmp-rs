@@ -67,6 +67,10 @@ compare:  1.2.3 Greater 1.2.3~preview
 > ./target/release/vercmp-rs luarocks "3.1.0-1" "3.1.0"
 scheme:   Luarocks
 compare:  3.1.0-1 Equal 3.1.0
+
+> ./target/release/vercmp-rs cran "1.2-3" "1-2.3"
+scheme:   Cran
+compare:  1.2-3 Equal 1-2.3
 ```
 
 # building

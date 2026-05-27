@@ -6,6 +6,7 @@ edition = "2024"
 [dependencies]
 alpm-version = { path = "../alpm-version" }
 apk-version = { path = "../apk-version" }
+cran-version = { path = "../cran-version" }
 debian-version = { path = "../debian-version" }
 luarocks-version = { path = "../luarocks-version" }
 maven-version = { path = "../maven-version" }

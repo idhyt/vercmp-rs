@@ -202,6 +202,10 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "1d07550c9036bf2ae0c684c4297d503f838287c83c53686d05370d0e139ae570"
 
 [[package]]
+name = "cran-version"
+version = "0.1.0"
+
+[[package]]
 name = "debian-version"
 version = "0.1.0"
 
@@ -691,6 +695,7 @@ dependencies = [
  "alpm-version",
  "apk-version",
  "cbindgen",
+ "cran-version",
  "debian-version",
  "luarocks-version",
  "maven-version",

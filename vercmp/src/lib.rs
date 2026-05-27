@@ -223,6 +223,9 @@ impl PurlType {
             PurlType::Opam => VersionScheme::Opam,
             // Luarocks(Lua) - 基于 Luarocks 包管理器的版本管理，比 SemVer 更宽松
             PurlType::Luarocks => VersionScheme::Luarocks,
+            // Cran(R) - 基于 CRAN 包管理器的版本管理，与 SemVer 不兼容
+            // https://github.com/wch/r-source/blob/trunk/src/library/utils/R/packages.R#L1183
+            PurlType::Cran => VersionScheme::Cran,
 
             // 类 SemVer 方案（严格遵循或近似 SemVer）
             PurlType::Cargo
@@ -247,12 +250,13 @@ impl PurlType {
             // TODO: Conda(Python) - 基于 Conda 包管理器的版本管理，SemVer 的一个超集或扩展
             | PurlType::Conda
             // TODO: Hackage(Haskell) - 基于 Hackage 包管理器的版本管理，与 SemVer 相似但有区别
+            // https://hackage-content.haskell.org/package/Cabal-syntax-3.16.1.0/docs/Distribution-Types-Version.html
             | PurlType::Hackage
             // TODO: Bitnami - 拥有专用 go-version 库的独特方案
             | PurlType::Bitnami => VersionScheme::Semantic,
-            // TODO: Cran(R 语言) - 基于 CRAN 包管理器的版本管理，与 SemVer 不兼容
-            PurlType::Cran => VersionScheme::Generic,
+
             // TODO: Cpan(Perl) - 基于 CPAN 包管理器的版本管理，与 SemVer 截然不同
+            // https://github.com/Perl/version.pm/blob/master/vutil
             PurlType::Cpan => VersionScheme::Generic,
             // TODO: 通用或无明显结构化版本的方案
             PurlType::ChromeExtension
@@ -277,10 +281,12 @@ impl PurlType {
 /// 版本比较方案类型
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
 pub enum VersionScheme {
-    /// APK 版本比较
-    Apk,
     /// ALPM 版本比较
     Alpm,
+    /// APK 版本比较
+    Apk,
+    /// Cran(R)
+    Cran,
     /// Debian 版本比较
     Deb,
     /// Docker 标签版本（宽松 SemVer）
@@ -317,13 +323,14 @@ impl VersionScheme {
     pub fn compare(&self, a: &str, b: &str) -> Result<std::cmp::Ordering, String> {
         match self {
             VersionScheme::Semantic => semantic_version::compare_version(a, b),
-            VersionScheme::Deb => Ok(debian_version::compare_version(a, b)),
-            VersionScheme::Apk => apk_version::compare_version(a, b),
-            VersionScheme::Rpm => rpm_version::compare_version(a, b),
             VersionScheme::Alpm => alpm_version::compare_version(a, b),
+            VersionScheme::Apk => apk_version::compare_version(a, b),
+            VersionScheme::Cran => cran_version::compare_version(a, b),
+            VersionScheme::Deb => Ok(debian_version::compare_version(a, b)),
+            VersionScheme::Luarocks => luarocks_version::compare_version(a, b),
             VersionScheme::Maven => maven_version::compare_version(a, b),
             VersionScheme::Opam => Ok(opam_version::compare_version(a, b)),
-            VersionScheme::Luarocks => luarocks_version::compare_version(a, b),
+            VersionScheme::Rpm => rpm_version::compare_version(a, b),
 
             // Fallback matching use the `version_compare` crate
             VersionScheme::Docker | VersionScheme::Generic => {
