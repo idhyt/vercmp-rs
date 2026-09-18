@@ -68,4 +68,17 @@ const TEST_CASES: &[(&str, Ordering, &str)] = &[
         "0.0.0-20180816102801-aaf60122140d",
     ),
     ("0", Ordering::Equal, "0.0.0-20180816102801-aaf60122140d"), // 非法的prerelease
+    ("0.9.1 (f4d44a8a54 2025-04-02)", Ordering::Less, "0.10.0"),
+    (
+        "CTyunSCA 0.9.1 (f4d44a8a54 2025-04-02)",
+        Ordering::Less,
+        "0.10.0",
+    ),
+    ("0.10.0-dev", Ordering::Less, "0.10.0"),
+    ("0.10.0-final", Ordering::Less, "0.10.0"),
+    ("0.10.0-beta", Ordering::Less, "0.10.0"),
+    ("0.10.0-beta", Ordering::Less, "0.10.0-dev"),
+    ("0.10.0-beta", Ordering::Less, "0.10.0-rc"),
+    ("0.10.0-latest", Ordering::Less, "0.10.0-release"),
+    ("0.10.0-release", Ordering::Less, "0.10.0"),
 ];

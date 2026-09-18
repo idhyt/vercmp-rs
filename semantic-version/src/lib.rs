@@ -28,7 +28,7 @@ static SEMVER_PATTERN: LazyLock<Regex> = LazyLock::new(|| {
 });
 
 static KNOWN_PRERELEASE_STR: LazyLock<[&'static str; 7]> =
-    LazyLock::new(|| ["dev", "final", "release", "alpha", "beta", "rc", "latest"]);
+    LazyLock::new(|| ["alpha", "beta", "dev", "final", "latest", "rc", "release"]);
 
 #[inline(always)]
 fn get_named_capture<'a>(captured: &'a regex::Captures, name: &str) -> Option<Cow<'a, str>> {
