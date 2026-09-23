@@ -3,6 +3,9 @@ name = "ws-build"
 version = "0.1.0"
 edition = "2024"
 
+description = "Build support crate for vercmp-rs workspace"
+license = "Apache-2.0"
+
 [lib]
 path = "src/lib.rs"
 
