@@ -1,0 +1,66 @@
+name: Release
+
+on:
+  push:
+    tags:
+      - "v*"
+      - "[0-9]*.[0-9]*.[0-9]*"
+
+env:
+  CARGO_TERM_COLOR: always
+
+jobs:
+  build:
+    strategy:
+      matrix:
+        target:
+          - x86_64-unknown-linux-musl
+          - aarch64-unknown-linux-musl
+          - x86_64-apple-darwin
+          - aarch64-apple-darwin
+          - x86_64-pc-windows-gnu
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+
+      - name: Install cross
+        uses: taiki-e/install-action@cross
+
+      - name: Build with bindings feature
+        run: cargo build --features generate-bindings
+
+      - name: Cross build
+        run: cross build --release --target ${{ matrix.target }}
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@v5
+        with:
+          name: vercmp-rs-${{ matrix.target }}
+          path: target/${{ matrix.target }}/release/vercmp-rs${{ contains(matrix.target, 'windows') && '.exe' || '' }}
+
+  release:
+    needs: build
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/download-artifact@v5
+        with:
+          path: artifacts
+
+      - name: Rename artifacts
+        run: |
+          for f in artifacts/vercmp-rs-*/vercmp-rs*; do
+            target=$(basename "$(dirname "$f")" | sed 's/^vercmp-rs-//')
+            ext="${f##*.}"
+            if [ "$ext" = "exe" ]; then
+              mv "$f" "vercmp-rs-${target}.exe"
+            else
+              mv "$f" "vercmp-rs-${target}"
+            fi
+          done
+
+      - name: Create release
+        uses: softprops/action-gh-release@v2
+        with:
+          files: vercmp-rs-*

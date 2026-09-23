@@ -1,0 +1,35 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+env:
+  CARGO_TERM_COLOR: always
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+
+      - name: Build with bindings feature
+        run: cargo build --features generate-bindings
+
+      - name: Build CLI
+        run: cargo build -p vercmp-rs --release
+
+      - name: Smoke test
+        run: |
+          ./target/release/vercmp-rs pkg:golang/google.golang.org/genproto 0.1.1.alpha 0.1.1 | tee /dev/stderr | grep -q "Less"
+          ./target/release/vercmp-rs pkg:rpm/xx 3.99.5final.SP07 3.99.5final.SP10 | tee /dev/stderr | grep -q "Less"
+          ./target/release/vercmp-rs apk 3.10.18-r1 3.10.10b-r1 | tee /dev/stderr | grep -q "Greater"
+          ./target/release/vercmp-rs deb 1:1.0 0:2.0 | tee /dev/stderr | grep -q "Greater"
+          ./target/release/vercmp-rs alpm 1.0beta 1.0rc | tee /dev/stderr | grep -q "Less"
+          ./target/release/vercmp-rs cargo 1.1.alpha 1.1 | tee /dev/stderr | grep -q "Less"
+          ./target/release/vercmp-rs cargo 1.1.dirty 1.1 | tee /dev/stderr | grep -q "Equal"
+
+      - name: Run unit tests
+        run: cargo test --workspace
