@@ -13,7 +13,7 @@ debian-version = { path = "../debian-version" }
 luarocks-version = { path = "../luarocks-version" }
 maven-version = { path = "../maven-version" }
 opam-version = { path = "../opam-version" }
-rpm-version = { path = "../rpm-version" }
+rpm-version = { path = "../rpm-version", package = "rpm-vercmp" }
 semantic-version = { path = "../semantic-version" }
 
 version-compare = "0.2.1"
