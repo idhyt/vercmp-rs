@@ -2,6 +2,7 @@
 name = "debian-version"
 version = "0.1.0"
 edition = "2024"
-description = "Debian Policy Manual"
+description = "Debian version comparison crate"
+license = "Apache-2.0"
 
 [dependencies]
