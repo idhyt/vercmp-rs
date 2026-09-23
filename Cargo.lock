@@ -15,7 +15,16 @@ dependencies = [
 name = "alpm-version"
 version = "0.1.0"
 dependencies = [
- "ws-build",
+ "ws-build 0.1.0 (registry+https://github.com/rust-lang/crates.io-index)",
+]
+
+[[package]]
+name = "alpm-version"
+version = "0.1.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "ee5d13e71a2aa5e9e6a38002d8a5830989368bec91d3d404e326306dd398e43a"
+dependencies = [
+ "ws-build 0.1.0 (registry+https://github.com/rust-lang/crates.io-index)",
 ]
 
 [[package]]
@@ -78,7 +87,16 @@ checksum = "7f202df86484c868dbad7eaa557ef785d5c66295e41b460ef922eca0723b842c"
 name = "apk-version"
 version = "0.1.0"
 dependencies = [
- "ws-build",
+ "ws-build 0.1.0 (registry+https://github.com/rust-lang/crates.io-index)",
+]
+
+[[package]]
+name = "apk-version"
+version = "0.1.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "2a8af83a3042eb4aa0072cf8a2617d77811775c97f86083522ad48616dde15f6"
+dependencies = [
+ "ws-build 0.1.0 (registry+https://github.com/rust-lang/crates.io-index)",
 ]
 
 [[package]]
@@ -206,8 +224,20 @@ name = "cran-version"
 version = "0.1.0"
 
 [[package]]
+name = "cran-version"
+version = "0.1.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "c668cd2edb7305d41d510d930831f1d59880a4aa2420c014d1c8d8fd919d3280"
+
+[[package]]
 name = "debian-version"
 version = "0.1.0"
+
+[[package]]
+name = "debian-version"
+version = "0.1.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "c8ee0aa20a9763547447aae6c9ea256eff1b096f5b08e5951f2e90680c0431be"
 
 [[package]]
 name = "either"
@@ -367,8 +397,24 @@ name = "luarocks-version"
 version = "0.1.0"
 
 [[package]]
+name = "luarocks-version"
+version = "0.1.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "84b815a6ea593873bd3331168d167a65271665f16d9afb11be6da092eaea7e9b"
+
+[[package]]
 name = "maven-version"
 version = "0.1.0"
+dependencies = [
+ "num-bigint",
+ "num-traits",
+]
+
+[[package]]
+name = "maven-version"
+version = "0.1.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "345b4b2b804e9275d43a6aa929e1a8b1657237c5cb156be78fe87078c5089044"
 dependencies = [
  "num-bigint",
  "num-traits",
@@ -441,6 +487,12 @@ name = "opam-version"
 version = "0.1.0"
 
 [[package]]
+name = "opam-version"
+version = "0.1.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "cc6e2579c43fa725dd718ccbee1d47bf025526ed43d23f76772bc292d9818317"
+
+[[package]]
 name = "prettyplease"
 version = "0.2.37"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -504,10 +556,19 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "dc897dd8d9e8bd1ed8cdad82b5966c3e0ecae09fb1907d58efaa013543185d0a"
 
 [[package]]
-name = "rpm-version"
+name = "rpm-vercmp"
 version = "0.1.0"
 dependencies = [
- "ws-build",
+ "ws-build 0.1.0 (registry+https://github.com/rust-lang/crates.io-index)",
+]
+
+[[package]]
+name = "rpm-vercmp"
+version = "0.1.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "73f7e9a60670a2dd5b6eee9ac29b1b334534e0314b51152105bfd48686a40f67"
+dependencies = [
+ "ws-build 0.1.0 (registry+https://github.com/rust-lang/crates.io-index)",
 ]
 
 [[package]]
@@ -532,6 +593,16 @@ dependencies = [
 [[package]]
 name = "semantic-version"
 version = "0.1.1"
+dependencies = [
+ "regex",
+ "semver",
+]
+
+[[package]]
+name = "semantic-version"
+version = "0.1.1"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "0c0b3ffbb20ace3ee2d7495abb21cd68bcb5cc263d2ae687d0377a7196ac996e"
 dependencies = [
  "regex",
  "semver",
@@ -690,20 +761,20 @@ checksum = "06abde3611657adf66d383f00b093d7faecc7fa57071cce2578660c9f1010821"
 
 [[package]]
 name = "vercmp-rs"
-version = "0.1.1"
+version = "0.1.2"
 dependencies = [
- "alpm-version",
- "apk-version",
+ "alpm-version 0.1.0 (registry+https://github.com/rust-lang/crates.io-index)",
+ "apk-version 0.1.0 (registry+https://github.com/rust-lang/crates.io-index)",
  "cbindgen",
- "cran-version",
- "debian-version",
- "luarocks-version",
- "maven-version",
- "opam-version",
- "rpm-version",
- "semantic-version",
+ "cran-version 0.1.0 (registry+https://github.com/rust-lang/crates.io-index)",
+ "debian-version 0.1.0 (registry+https://github.com/rust-lang/crates.io-index)",
+ "luarocks-version 0.1.0 (registry+https://github.com/rust-lang/crates.io-index)",
+ "maven-version 0.1.0 (registry+https://github.com/rust-lang/crates.io-index)",
+ "opam-version 0.1.0 (registry+https://github.com/rust-lang/crates.io-index)",
+ "rpm-vercmp 0.1.0 (registry+https://github.com/rust-lang/crates.io-index)",
+ "semantic-version 0.1.1 (registry+https://github.com/rust-lang/crates.io-index)",
  "version-compare",
- "ws-build",
+ "ws-build 0.1.0 (registry+https://github.com/rust-lang/crates.io-index)",
 ]
 
 [[package]]
@@ -888,6 +959,16 @@ dependencies = [
 [[package]]
 name = "ws-build"
 version = "0.1.0"
+dependencies = [
+ "bindgen",
+ "cc",
+]
+
+[[package]]
+name = "ws-build"
+version = "0.1.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "af4e55a282ca9cd787b7160a71cfd0d005b188c4ae7206b0d6869eb8ff0312f3"
 dependencies = [
  "bindgen",
  "cc",
