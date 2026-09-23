@@ -1,5 +1,5 @@
 [package]
-name = "rpm-version"
+name = "rpm-vercmp"
 version = "0.1.0"
 edition = "2024"
 description = "RPM version comparison crate"

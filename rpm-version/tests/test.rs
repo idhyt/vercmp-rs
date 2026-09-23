@@ -1,6 +1,6 @@
 use std::cmp::Ordering;
 
-use rpm_version::compare_rpm_versions;
+use rpm_vercmp::compare_rpm_versions;
 
 #[test]
 fn test_rpm_version_compare() {
