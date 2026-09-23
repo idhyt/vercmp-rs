@@ -7,6 +7,8 @@ A comprehensive version parsing and comparison library that faithfully implement
 Add the crate you need to your `Cargo.toml`:
 
 ```bash
+cargo add apk-version
+# or add from the git repo
 cargo add --git ssh://git@github.com/idhyt/vercmp-rs.git apk-version
 ```
 
@@ -22,6 +24,8 @@ fn main() {
 Or add the umbrella crate to work with any ecosystem:
 
 ```bash
+cargo add vercmp-rs
+# or add from the git repo
 cargo add --git ssh://git@github.com/idhyt/vercmp-rs.git vercmp-rs
 ```
 
