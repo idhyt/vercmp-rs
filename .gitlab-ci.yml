@@ -5,8 +5,8 @@ stages:
 variables:
   GIT_STRATEGY: clone
   GIT_DEPTH: 1
-  RUSTUP_UPDATE_ROOT: "https://mirrors.aliyun.com/rustup/rustup"
-  RUSTUP_DIST_SERVER: "https://mirrors.aliyun.com/rustup"
+  RUSTUP_DIST_SERVER: "https://mirrors.ustc.edu.cn/rust-static"
+  RUSTUP_UPDATE_ROOT: "https://mirrors.ustc.edu.cn/rust-static/rustup"
   RUSTUP_AUTO_SELF_UPDATE: "false"
   RUSTUP_INIT_SKIP_PATH_CHECK: "yes"
 
