@@ -20,7 +20,7 @@ variables:
   script:
     - echo $BUILD_TARGET
     - cargo clean && cargo build --features generate-bindings
-    - cross build --release --target $BUILD_TARGET
+    - RUSTUP_TOOLCHAIN=1.96.0 cross build --release --target $BUILD_TARGET
   only:
     - main
   artifacts:

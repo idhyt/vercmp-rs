@@ -102,6 +102,8 @@ cargo build --features generate-bindings
 Cross-build with the `release` profile:
 
 ```bash
+export RUSTUP_TOOLCHAIN=1.96.0
+
 cross build --release --target x86_64-unknown-linux-musl
 cross build --release --target aarch64-unknown-linux-musl
 cross build --release --target x86_64-apple-darwin
@@ -112,7 +114,7 @@ cross build --release --target x86_64-pc-windows-gnu
 Cross-build all targets:
 
 ```bash
-cargo clean && cargo build --features generate-bindings && (x() { rm -rf ./target/release && cross build --release --target "$1"; }; x x86_64-unknown-linux-musl && x aarch64-unknown-linux-musl && x x86_64-apple-darwin && x aarch64-apple-darwin && x x86_64-pc-windows-gnu)
+cargo clean && cargo build --features generate-bindings && (x() { rm -rf ./target/release && RUSTUP_TOOLCHAIN=1.96.0 cross build --release --target "$1"; }; x x86_64-unknown-linux-musl && x aarch64-unknown-linux-musl && x x86_64-apple-darwin && x aarch64-apple-darwin && x x86_64-pc-windows-gnu)
 ```
 
 Inspect built binaries:
