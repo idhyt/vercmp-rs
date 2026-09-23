@@ -6,7 +6,8 @@ edition = "2024"
 [dependencies]
 
 [build-dependencies]
-ws-build = { path = "../ws-build" }
+# ws-build = { path = "../ws-build" }
+ws-build = { version = "0.1.0" }
 
 [features]
 default = []
