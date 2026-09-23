@@ -2,8 +2,19 @@
 name = "vercmp-rs"
 version = "0.1.1"
 edition = "2024"
-description = "Version comparison crate"
-license = "Apache-2.0"
+authors = ["idhyt3r@gmail.com"]
+license = "MIT"
+description = "Comprehensive version parsing and comparison implementing Package URL (purl) ecosystem rules (SemVer, RPM, APK, DEB, ALPM, etc.)"
+readme = "README.md"
+homepage = "https://github.com/idhyt/vercmp-rs/tree/main/vercmp"
+repository = "https://github.com/idhyt/vercmp-rs"
+keywords = ["vercmp", "comparison", "semver", "purl", "version"]
+categories = [
+    "development-tools",
+    "development-tools::build-utils",
+    "command-line-utilities",
+    "value-formatting",
+]
 
 [dependencies]
 # alpm-version = { path = "../alpm-version" }
