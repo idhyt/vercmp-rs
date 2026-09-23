@@ -2,6 +2,8 @@
 name = "alpm-version"
 version = "0.1.0"
 edition = "2024"
+description = "ALPM version comparison crate"
+license = "Apache-2.0"
 
 [dependencies]
 
