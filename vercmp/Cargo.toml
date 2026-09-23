@@ -2,6 +2,8 @@
 name = "vercmp-rs"
 version = "0.1.1"
 edition = "2024"
+description = "Version comparison crate"
+license = "Apache-2.0"
 
 [dependencies]
 alpm-version = { path = "../alpm-version" }
