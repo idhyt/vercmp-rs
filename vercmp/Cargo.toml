@@ -6,20 +6,30 @@ description = "Version comparison crate"
 license = "Apache-2.0"
 
 [dependencies]
-alpm-version = { path = "../alpm-version" }
-apk-version = { path = "../apk-version" }
-cran-version = { path = "../cran-version" }
-debian-version = { path = "../debian-version" }
-luarocks-version = { path = "../luarocks-version" }
-maven-version = { path = "../maven-version" }
-opam-version = { path = "../opam-version" }
-rpm-version = { path = "../rpm-version", package = "rpm-vercmp" }
-semantic-version = { path = "../semantic-version" }
+# alpm-version = { path = "../alpm-version" }
+# apk-version = { path = "../apk-version" }
+# cran-version = { path = "../cran-version" }
+# debian-version = { path = "../debian-version" }
+# luarocks-version = { path = "../luarocks-version" }
+# maven-version = { path = "../maven-version" }
+# opam-version = { path = "../opam-version" }
+# rpm-version = { path = "../rpm-version", package = "rpm-vercmp" }
+# semantic-version = { path = "../semantic-version" }
+alpm-version = { version = "0.1.0" }
+apk-version = { version = "0.1.0" }
+cran-version = { version = "0.1.0" }
+debian-version = { version = "0.1.0" }
+luarocks-version = { version = "0.1.0" }
+maven-version = { version = "0.1.0" }
+opam-version = { version = "0.1.0" }
+rpm-version = { version = "0.1.0", package = "rpm-vercmp" }
+semantic-version = { version = "0.1.0" }
 
 version-compare = "0.2.1"
 
 [build-dependencies]
-ws-build = { path = "../ws-build" }
+# ws-build = { path = "../ws-build" }
+ws-build = { version = "0.1.0" }
 cbindgen = { version = "0.29.2", optional = true }
 
 # [lib]
