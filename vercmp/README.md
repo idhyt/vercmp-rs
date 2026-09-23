@@ -53,7 +53,7 @@ fn main() {
 
 ## CLI
 
-Usage with [vercmp-rs cli example](vercmp/src/main.rs):
+Usage with [vercmp-rs cli example](src/main.rs):
 
 ```bash
 cargo build -p vercmp-rs --release
