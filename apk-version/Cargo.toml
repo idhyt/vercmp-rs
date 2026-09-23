@@ -2,6 +2,8 @@
 name = "apk-version"
 version = "0.1.0"
 edition = "2024"
+description = "APK version comparison crate"
+license = "Apache-2.0"
 
 [dependencies]
 
@@ -9,7 +11,8 @@ edition = "2024"
 [build-dependencies]
 # bindgen = "0.72.1"
 # cc = "1.2.62"
-ws-build = { path = "../ws-build" }
+# ws-build = { path = "../ws-build" }
+ws-build = { version = "0.1.0" }
 
 [features]
 default = []
